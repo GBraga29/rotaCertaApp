@@ -1,5 +1,106 @@
+// Dados mockados dos postos
+const postosData = [
+    {
+        id: 1,
+        nome: 'Posto Ipiranga - Av. Paulista',
+        distancia: 1.2,
+        segmento: 'bandeira',
+        comodidadesCarro: ['Fraldário', 'Wi-Fi', 'Loja de Conveniência', 'Ar Gratuito'],
+        comodidadesCaminhao: ['Pátio Vigiado', 'Chuveiro', 'Restaurante', 'Borracharia'],
+        combustiveis: [
+            {
+                tipo: 'Gasolina Comum',
+                preco: 5.65,
+                atualizadoEm: '2025-10-21T11:55:00-03:00',
+                notaQualidade: 4.5,
+                seloANP: true
+            },
+            {
+                tipo: 'Gasolina Aditivada',
+                preco: 5.89,
+                atualizadoEm: '2025-10-21T11:55:00-03:00',
+                notaQualidade: 4.8,
+                seloANP: true
+            },
+            {
+                tipo: 'Etanol',
+                preco: 3.99,
+                atualizadoEm: '2025-10-21T11:50:00-03:00',
+                notaQualidade: 4.2,
+                seloANP: true
+            }
+        ]
+    },
+    {
+        id: 2,
+        nome: 'Posto Certo (Bandeira Branca)',
+        distancia: 2.4,
+        segmento: 'bandeira_branca',
+        comodidadesCarro: ['Wi-Fi', 'Ar Gratuito'],
+        comodidadesCaminhao: ['Pátio Vigiado', 'Chuveiro'],
+        combustiveis: [
+            {
+                tipo: 'Gasolina Comum',
+                preco: 5.55,
+                atualizadoEm: '2025-10-21T09:30:00-03:00',
+                notaQualidade: 3.8,
+                seloANP: false
+            },
+            {
+                tipo: 'Etanol',
+                preco: 3.85,
+                atualizadoEm: '2025-10-21T09:30:00-03:00',
+                notaQualidade: 3.5,
+                seloANP: false
+            },
+            {
+                tipo: 'Diesel S-10',
+                preco: 6.05,
+                atualizadoEm: '2025-10-21T09:25:00-03:00',
+                notaQualidade: 4.0,
+                seloANP: true
+            }
+        ]
+    },
+    {
+        id: 3,
+        nome: 'Posto BR - Rodovia Anhanguera',
+        distancia: 8.1,
+        segmento: 'rodovia',
+        comodidadesCarro: ['Fraldário', 'Wi-Fi', 'Loja de Conveniência', 'Ar Gratuito', 'Caixa 24h'],
+        comodidadesCaminhao: ['Pátio Vigiado', 'Chuveiro', 'Restaurante', 'Borracharia', 'Oficina Mecânica', 'Hotel'],
+        combustiveis: [
+            {
+                tipo: 'Diesel S-10',
+                preco: 5.99,
+                atualizadoEm: '2025-10-21T12:00:00-03:00',
+                notaQualidade: 4.9,
+                seloANP: true
+            },
+            {
+                tipo: 'Gasolina Comum',
+                preco: 5.79,
+                atualizadoEm: '2025-10-21T12:00:00-03:00',
+                notaQualidade: 4.6,
+                seloANP: true
+            },
+            {
+                tipo: 'Arla 32',
+                preco: 3.50,
+                atualizadoEm: '2025-10-21T12:00:00-03:00',
+                notaQualidade: 5.0,
+                seloANP: true
+            }
+        ]
+    }
+];
+
 // Variável global para armazenar o perfil selecionado
 let selectedProfile = 'consumer';
+
+// Filtros ativos
+let filtroSegmento = 'todos';
+let filtroPerfil = 'carro';
 
 // Histórico de navegação para voltar corretamente
 let navigationHistory = [];
@@ -140,8 +241,150 @@ window.addEventListener('click', (event) => {
     }
 });
 
+// Função para calcular tempo desde atualização
+function calcularTempoDesdeAtualizacao(dataHora) {
+    const agora = new Date();
+    const dataAtualizacao = new Date(dataHora);
+    const diferencaMs = agora - dataAtualizacao;
+    const diferencaMin = Math.floor(diferencaMs / 60000);
+    
+    if (diferencaMin < 60) {
+        return `Atualizado há ${diferencaMin} min`;
+    } else if (diferencaMin < 1440) {
+        const horas = Math.floor(diferencaMin / 60);
+        return `Atualizado há ${horas}h`;
+    } else {
+        const dias = Math.floor(diferencaMin / 1440);
+        return `Atualizado há ${dias}d`;
+    }
+}
+
+// Função para renderizar estrelas de qualidade
+function renderizarEstrelas(nota) {
+    const estrelas = [];
+    const notaArredondada = Math.round(nota * 2) / 2; // Arredonda para 0.5
+    
+    for (let i = 1; i <= 5; i++) {
+        if (i <= notaArredondada) {
+            estrelas.push('★');
+        } else if (i - 0.5 === notaArredondada) {
+            estrelas.push('☆');
+        } else {
+            estrelas.push('☆');
+        }
+    }
+    
+    return estrelas.join('');
+}
+
+// Função para filtrar postos por segmento
+function filtrarPorSegmento(segmento) {
+    filtroSegmento = segmento;
+    renderizarPostos();
+    
+    // Atualiza botões ativos
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
+// Função para alternar perfil
+function alternarPerfil(perfil) {
+    filtroPerfil = perfil;
+    renderizarPostos();
+    
+    // Atualiza botões ativos
+    document.querySelectorAll('.profile-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
+// Função para renderizar lista de postos
+function renderizarPostos() {
+    const container = document.getElementById('postosContainer');
+    if (!container) return;
+    
+    // Filtra postos
+    let postosFiltrados = postosData;
+    
+    if (filtroSegmento !== 'todos') {
+        postosFiltrados = postosFiltrados.filter(posto => posto.segmento === filtroSegmento);
+    }
+    
+    // Limpa container
+    container.innerHTML = '';
+    
+    // Renderiza cada posto
+    postosFiltrados.forEach(posto => {
+        const postoElement = document.createElement('div');
+        postoElement.className = 'list-item-expandable';
+        
+        // Seleciona comodidades baseado no perfil
+        const comodidades = filtroPerfil === 'carro' ? posto.comodidadesCarro : posto.comodidadesCaminhao;
+        
+        // Renderiza combustíveis
+        const combustiveisHTML = posto.combustiveis.map(combustivel => `
+            <div class="combustivel-item">
+                <div class="combustivel-info">
+                    <div class="combustivel-tipo">${combustivel.tipo}</div>
+                    <div class="combustivel-preco">R$ ${combustivel.preco.toFixed(2)}</div>
+                </div>
+                <div class="combustivel-detalhes">
+                    <div class="combustivel-tempo">${calcularTempoDesdeAtualizacao(combustivel.atualizadoEm)}</div>
+                    <div class="combustivel-qualidade">
+                        <span class="estrelas">${renderizarEstrelas(combustivel.notaQualidade)}</span>
+                        <span class="nota">${combustivel.notaQualidade.toFixed(1)}</span>
+                    </div>
+                    ${combustivel.seloANP ? '<div class="selo-anp">✓ Selo ANP</div>' : ''}
+                </div>
+            </div>
+        `).join('');
+        
+        // Renderiza comodidades
+        const comodidadesHTML = comodidades.map(comodidade => 
+            `<span class="comodidade-tag">${comodidade}</span>`
+        ).join('');
+        
+        postoElement.innerHTML = `
+            <div class="list-item-header" onclick="togglePostoDetalhes(${posto.id})">
+                <div class="list-item-name">${posto.nome}</div>
+                <div class="list-item-distance">${posto.distancia} km</div>
+            </div>
+            <div class="posto-detalhes" id="posto-${posto.id}">
+                <div class="combustiveis-section">
+                    <h3 class="section-subtitle">Combustíveis</h3>
+                    ${combustiveisHTML}
+                </div>
+                <div class="comodidades-section">
+                    <h3 class="section-subtitle">Comodidades</h3>
+                    <div class="comodidades-list">
+                        ${comodidadesHTML}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(postoElement);
+    });
+}
+
+// Função para expandir/recolher detalhes do posto
+function togglePostoDetalhes(postoId) {
+    const detalhes = document.getElementById(`posto-${postoId}`);
+    if (detalhes) {
+        detalhes.classList.toggle('expanded');
+    }
+}
+
 // Inicialização - mostra a tela de boas-vindas
 window.addEventListener('DOMContentLoaded', () => {
     showScreen('welcomeScreen');
+    
+    // Renderiza postos se estiver na tela de lista
+    setTimeout(() => {
+        renderizarPostos();
+    }, 100);
 });
 

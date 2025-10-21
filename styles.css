@@ -813,3 +813,221 @@ select.form-input {
     }
 }
 
+/* Profile Toggle */
+.profile-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.profile-toggle-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-toggle-btn.active {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-toggle-btn:hover {
+    color: #667eea;
+}
+
+/* Filters Container */
+.filters-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.filters-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.filters-container::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 20px;
+    background: white;
+    color: #666;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filter-btn.active:hover {
+    color: white;
+}
+
+/* List Item Expandable */
+.list-item-expandable {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.list-item-expandable .list-item-header {
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item-expandable:hover {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+/* Posto Detalhes */
+.posto-detalhes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #f8f9ff;
+}
+
+.posto-detalhes.expanded {
+    max-height: 1000px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    padding: 15px 16px 0 16px;
+}
+
+/* Combustíveis Section */
+.combustiveis-section {
+    padding: 0 16px 15px 16px;
+}
+
+.combustivel-item {
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.combustivel-item:last-child {
+    margin-bottom: 0;
+}
+
+.combustivel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.combustivel-tipo {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.combustivel-preco {
+    font-size: 20px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.combustivel-detalhes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.combustivel-tempo {
+    font-size: 12px;
+    color: #999;
+}
+
+.combustivel-qualidade {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.estrelas {
+    color: #ffd700;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.nota {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+}
+
+.selo-anp {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Comodidades Section */
+.comodidades-section {
+    padding: 0 16px 15px 16px;
+}
+
+.comodidades-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.comodidade-tag {
+    background: white;
+    border: 1px solid #667eea;
+    color: #667eea;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
