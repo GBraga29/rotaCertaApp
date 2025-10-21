@@ -1,6 +1,9 @@
 // Variável global para armazenar o perfil selecionado
 let selectedProfile = 'consumer';
 
+// Histórico de navegação para voltar corretamente
+let navigationHistory = [];
+
 // Função principal para mostrar telas
 function showScreen(screenId) {
     // Esconde todas as telas
@@ -13,6 +16,15 @@ function showScreen(screenId) {
     const targetScreen = document.getElementById(screenId);
     if (targetScreen) {
         targetScreen.classList.add('active');
+        
+        // Adiciona ao histórico de navegação (exceto para telas especiais)
+        if (!['welcomeScreen', 'loginScreen', 'createAccountScreen', 'forgotPasswordScreen'].includes(screenId)) {
+            navigationHistory.push(screenId);
+            // Limita o histórico a 10 itens
+            if (navigationHistory.length > 10) {
+                navigationHistory.shift();
+            }
+        }
     }
 }
 
@@ -97,6 +109,28 @@ function reactToCompetitor(action) {
     
     alert(message);
     closeModal('reactionModal');
+}
+
+// Função para voltar à tela anterior
+function goBack() {
+    // Remove a tela atual do histórico
+    if (navigationHistory.length > 0) {
+        navigationHistory.pop();
+    }
+    
+    // Se há histórico, volta para a tela anterior
+    if (navigationHistory.length > 0) {
+        const previousScreen = navigationHistory[navigationHistory.length - 1];
+        showScreen(previousScreen);
+    }
+    // Se não há histórico, volta para a tela apropriada baseada no perfil
+    else {
+        if (selectedProfile === 'owner') {
+            showScreen('proDashboardScreen');
+        } else {
+            showScreen('userDashboardScreen');
+        }
+    }
 }
 
 // Fechar modal clicando fora dele
