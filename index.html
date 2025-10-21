@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rota Certa - Protótipo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        
+        <!-- Tela de Boas-Vindas -->
+        <div id="welcomeScreen" class="screen active">
+            <div class="welcome-content">
+                <div class="welcome-icon">📍</div>
+                <h1 class="welcome-title">Bem-vindo ao<br>Rota Certa</h1>
+                <p class="welcome-text">Encontre os melhores preços de combustível e gerencie seu posto com facilidade</p>
+                
+                <button class="btn btn-primary" onclick="selectProfile('consumer')">
+                    🚗 Sou Consumidor
+                </button>
+                <button class="btn btn-secondary" onclick="selectProfile('owner')">
+                    ⛽ Sou Dono de Posto
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela de Login -->
+        <div id="loginScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Faça login para continuar</div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+
+            <a class="form-link" onclick="showScreen('forgotPasswordScreen')">
+                Esqueci minha senha
+            </a>
+            <a class="form-link" onclick="showScreen('createAccountScreen')">
+                Criar novo cadastro
+            </a>
+
+            <button class="back-btn" onclick="showScreen('welcomeScreen')">
+                ← Voltar
+            </button>
+        </div>
+
+        <!-- Tela de Recuperação de Senha -->
+        <div id="forgotPasswordScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Recuperar senha</div>
+            </div>
+
+            <p style="color: #666; margin-bottom: 30px; line-height: 1.5;">
+                Digite seu email e enviaremos instruções para redefinir sua senha.
+            </p>
+
+            <form onsubmit="event.preventDefault(); alert('Email de recuperação enviado!'); showScreen('loginScreen');">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="seu@email.com" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Recuperar Senha</button>
+            </form>
+
+            <button class="back-btn" onclick="showScreen('loginScreen')">
+                ← Voltar para login
+            </button>
+        </div>
+
+        <!-- Tela de Criar Conta -->
+        <div id="createAccountScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Criar nova conta</div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); handleCreateAccount();">
+                <div class="form-group">
+                    <label class="form-label">Nome completo</label>
+                    <input type="text" class="form-input" placeholder="Seu nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-input" placeholder="Mínimo 6 caracteres" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirmar senha</label>
+                    <input type="password" class="form-input" placeholder="Digite a senha novamente" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+
+            <button class="back-btn" onclick="showScreen('loginScreen')">
+                ← Voltar para login
+            </button>
+        </div>
+
+        <!-- Tela de Escolha de Plano -->
+        <div id="planChoiceScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Escolha seu plano</div>
+            </div>
+
+            <h2 style="font-size: 22px; color: #333; margin-bottom: 25px; text-align: center;">
+                Qual plano melhor descreve sua necessidade?
+            </h2>
+
+            <div class="plan-card" onclick="showScreen('proDashboardScreen')">
+                <span class="plan-badge">PLANO PRO</span>
+                <div class="plan-title">Gestão Completa e Marketing</div>
+                <div class="plan-description">
+                    Ideal para postos que querem maximizar resultados com ferramentas avançadas de gestão, análise e marketing digital.
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Dashboard completo</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Análise de concorrência</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Marketing automático</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Relatórios avançados</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="plan-card" onclick="showScreen('expressDashboardScreen')">
+                <span class="plan-badge express">PLANO EXPRESS</span>
+                <div class="plan-title">Agilidade para o Dia a Dia</div>
+                <div class="plan-description">
+                    Perfeito para postos que buscam praticidade e rapidez na atualização de preços e informações essenciais.
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Atualização rápida de preços</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Interface simplificada</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Notificações essenciais</span>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="back-btn" onclick="showScreen('loginScreen')">
+                ← Voltar
+            </button>
+        </div>
+
+        <!-- Dashboard Plano Pro -->
+        <div id="proDashboardScreen" class="screen">
+            <div class="dashboard-header">
+                <div class="dashboard-title">Plano Pro</div>
+                <div class="dashboard-subtitle">Gestão Completa e Marketing</div>
+            </div>
+
+            <!-- Alerta de Concorrência -->
+            <div class="alert-card">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <div class="alert-title">Alerta de Preço</div>
+                    <div class="alert-text">O Posto Shell - Morumbi alterou a Gasolina Comum para R$ 5,59.</div>
+                </div>
+                <button class="btn btn-alert" onclick="openModal('reactionModal')">Reagir Agora</button>
+            </div>
+
+            <h2 style="font-size: 18px; color: #333; margin-bottom: 15px; margin-top: 25px;">
+                📊 Métricas do Dia
+            </h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">R$ 32.754</div>
+                    <div class="stat-label">Faturamento do Dia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89</div>
+                    <div class="stat-label">Check-ins via App</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">27</div>
+                    <div class="stat-label">Cupons Resgatados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1.243</div>
+                    <div class="stat-label">Visualizações do Perfil</div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 18px; color: #333; margin-bottom: 15px; margin-top: 25px;">
+                ⚡ Ações Rápidas
+            </h2>
+
+            <button class="btn btn-primary" onclick="showScreen('priceEditScreen')">
+                💰 Editar Preços
+            </button>
+            <button class="btn btn-secondary">
+                🎁 Criar Promoção
+            </button>
+            <button class="btn btn-secondary" onclick="showScreen('schedulePriceScreen')">
+                ⏰ Agendar Preço
+            </button>
+
+            <button class="btn btn-warning" onclick="showScreen('planChoiceScreen')" style="margin-top: 20px;">
+                Trocar de Plano
+            </button>
+
+            <button class="back-btn" onclick="showScreen('welcomeScreen')" style="margin-top: 20px;">
+                ← Sair
+            </button>
+        </div>
+
+        <!-- Dashboard Plano Express -->
+        <div id="expressDashboardScreen" class="screen">
+            <div class="dashboard-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                <div class="dashboard-title">Plano Express</div>
+                <div class="dashboard-subtitle">Agilidade para o Dia a Dia</div>
+            </div>
+
+            <h2 style="font-size: 18px; color: #333; margin-bottom: 15px;">
+                💰 Atualizar Preços Rapidamente
+            </h2>
+
+            <div class="dashboard-card">
+                <div class="card-text" style="margin-bottom: 20px;">
+                    Última atualização: Hoje, 09:15
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Gasolina Comum</label>
+                    <input type="text" class="form-input" placeholder="R$ 5,65" value="R$ 5,65">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Gasolina Aditivada</label>
+                    <input type="text" class="form-input" placeholder="R$ 5,85" value="R$ 5,85">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Etanol</label>
+                    <input type="text" class="form-input" placeholder="R$ 3,99" value="R$ 3,99">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Diesel S-10</label>
+                    <input type="text" class="form-input" placeholder="R$ 6,10" value="R$ 6,10">
+                </div>
+                
+                <button class="btn btn-success">
+                    ✓ Salvar Alterações
+                </button>
+                <button class="btn btn-secondary" onclick="showScreen('schedulePriceScreen')">
+                    ⏰ Agendar Preço
+                </button>
+            </div>
+
+            <button class="btn btn-primary" onclick="showScreen('planChoiceScreen')" style="margin-top: 20px;">
+                ⬆️ Upgrade para Plano Pro
+            </button>
+
+            <button class="back-btn" onclick="showScreen('welcomeScreen')" style="margin-top: 20px;">
+                ← Sair
+            </button>
+        </div>
+
+        <!-- Dashboard do Consumidor -->
+        <div id="userDashboardScreen" class="screen user-screen">
+            <div class="search-bar">
+                <div class="search-input-group">
+                    <span>📍</span>
+                    <input type="text" placeholder="Origem" readonly>
+                </div>
+                <div class="search-input-group">
+                    <span>🏁</span>
+                    <input type="text" placeholder="Destino" readonly>
+                </div>
+            </div>
+
+            <div class="promotions-section">
+                <h2 class="section-title">Promoções Próximas</h2>
+
+                <!-- Card 1 -->
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <div class="promo-name">Posto Ipiranga - Av. Paulista</div>
+                        <div class="promo-distance">1.2 km</div>
+                    </div>
+                    <div class="promo-price">R$ 5,65</div>
+                    <div class="promo-fuel">Gasolina Comum</div>
+                    <div class="promo-offer">
+                        🎁 Na troca de óleo, a ducha é grátis!
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <div class="promo-name">Shell Select - Morumbi</div>
+                        <div class="promo-distance">3.5 km</div>
+                    </div>
+                    <div class="promo-price">R$ 3,89</div>
+                    <div class="promo-fuel">Etanol</div>
+                    <div class="promo-offer">
+                        ☕ Café Expresso + Pão de Queijo por R$ 9,90
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="promo-card">
+                    <div class="promo-header">
+                        <div class="promo-name">Posto BR - Aeroporto</div>
+                        <div class="promo-distance">8.1 km</div>
+                    </div>
+                    <div class="promo-price">R$ 5,99</div>
+                    <div class="promo-fuel">Diesel S-10</div>
+                    <div class="promo-offer">
+                        🎁 Abasteça acima de R$ 150 e ganhe um chaveiro exclusivo!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu de Navegação Inferior -->
+            <div class="bottom-nav">
+                <button class="nav-btn active" onclick="showUserScreen('userDashboardScreen', this)">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">Início</div>
+                </button>
+                <button class="nav-btn" onclick="showUserScreen('userMapScreen', this)">
+                    <div class="nav-icon">🗺️</div>
+                    <div class="nav-label">Mapa</div>
+                </button>
+                <button class="nav-btn" onclick="showUserScreen('userListScreen', this)">
+                    <div class="nav-icon">📋</div>
+                    <div class="nav-label">Lista</div>
+                </button>
+                <button class="nav-btn" onclick="showScreen('welcomeScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">Perfil</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela de Mapa do Consumidor -->
+        <div id="userMapScreen" class="screen user-screen">
+            <div class="map-container">
+                <!-- Mapa de fundo simulado -->
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d0d0d0" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="#f5f5f5"/>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                    
+                    <!-- Ruas simuladas -->
+                    <line x1="0" y1="200" x2="375" y2="200" stroke="#c0c0c0" stroke-width="8"/>
+                    <line x1="0" y1="400" x2="375" y2="400" stroke="#c0c0c0" stroke-width="8"/>
+                    <line x1="150" y1="0" x2="150" y2="667" stroke="#c0c0c0" stroke-width="6"/>
+                    <line x1="280" y1="0" x2="280" y2="667" stroke="#c0c0c0" stroke-width="6"/>
+                    
+                    <!-- Áreas verdes -->
+                    <rect x="10" y="450" width="100" height="80" fill="#c8e6c9" rx="5"/>
+                    <rect x="250" y="50" width="80" height="100" fill="#c8e6c9" rx="5"/>
+                </svg>
+
+                <!-- Pins dos postos -->
+                <div class="map-pin" style="top: 180px; left: 140px;" title="Posto Ipiranga"></div>
+                <div class="map-pin" style="top: 320px; left: 260px;" title="Shell Select"></div>
+                <div class="map-pin" style="top: 450px; left: 90px;" title="Posto BR"></div>
+                <div class="map-pin" style="top: 250px; left: 200px;" title="Posto Certo"></div>
+            </div>
+
+            <!-- Menu de Navegação Inferior -->
+            <div class="bottom-nav">
+                <button class="nav-btn" onclick="showUserScreen('userDashboardScreen', this)">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">Início</div>
+                </button>
+                <button class="nav-btn active" onclick="showUserScreen('userMapScreen', this)">
+                    <div class="nav-icon">🗺️</div>
+                    <div class="nav-label">Mapa</div>
+                </button>
+                <button class="nav-btn" onclick="showUserScreen('userListScreen', this)">
+                    <div class="nav-icon">📋</div>
+                    <div class="nav-label">Lista</div>
+                </button>
+                <button class="nav-btn" onclick="showScreen('welcomeScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">Perfil</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela de Lista do Consumidor -->
+        <div id="userListScreen" class="screen user-screen">
+            <div class="list-container">
+                <h2 class="section-title">Postos Próximos</h2>
+
+                <!-- Item 1 -->
+                <div class="list-item">
+                    <div class="list-item-header">
+                        <div class="list-item-name">Posto Ipiranga - Av. Paulista</div>
+                        <div class="list-item-distance">1.2 km</div>
+                    </div>
+                    <div class="list-item-details">
+                        <div class="list-item-fuel">Gasolina Comum</div>
+                        <div class="list-item-price">R$ 5,65</div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="list-item">
+                    <div class="list-item-header">
+                        <div class="list-item-name">Shell Select - Morumbi</div>
+                        <div class="list-item-distance">3.5 km</div>
+                    </div>
+                    <div class="list-item-details">
+                        <div class="list-item-fuel">Etanol</div>
+                        <div class="list-item-price">R$ 3,89</div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="list-item">
+                    <div class="list-item-header">
+                        <div class="list-item-name">Posto BR - Aeroporto</div>
+                        <div class="list-item-distance">8.1 km</div>
+                    </div>
+                    <div class="list-item-details">
+                        <div class="list-item-fuel">Diesel S-10</div>
+                        <div class="list-item-price">R$ 5,99</div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="list-item">
+                    <div class="list-item-header">
+                        <div class="list-item-name">Posto Certo (Bandeira Branca)</div>
+                        <div class="list-item-distance">2.4 km</div>
+                    </div>
+                    <div class="list-item-details">
+                        <div class="list-item-fuel">Gasolina Comum</div>
+                        <div class="list-item-price">R$ 5,55</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu de Navegação Inferior -->
+            <div class="bottom-nav">
+                <button class="nav-btn" onclick="showUserScreen('userDashboardScreen', this)">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">Início</div>
+                </button>
+                <button class="nav-btn" onclick="showUserScreen('userMapScreen', this)">
+                    <div class="nav-icon">🗺️</div>
+                    <div class="nav-label">Mapa</div>
+                </button>
+                <button class="nav-btn active" onclick="showUserScreen('userListScreen', this)">
+                    <div class="nav-icon">📋</div>
+                    <div class="nav-label">Lista</div>
+                </button>
+                <button class="nav-btn" onclick="showScreen('welcomeScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">Perfil</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela Modular: Edição de Preços -->
+        <div id="priceEditScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Editar Preços</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Gasolina Comum</label>
+                <input type="text" class="form-input" placeholder="R$ 5,65" value="R$ 5,65">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Gasolina Aditivada</label>
+                <input type="text" class="form-input" placeholder="R$ 5,85" value="R$ 5,85">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Etanol</label>
+                <input type="text" class="form-input" placeholder="R$ 3,99" value="R$ 3,99">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Diesel S-10</label>
+                <input type="text" class="form-input" placeholder="R$ 6,10" value="R$ 6,10">
+            </div>
+
+            <button class="btn btn-success" onclick="alert('Preços atualizados com sucesso!'); showScreen('proDashboardScreen');">
+                ✓ Salvar Alterações
+            </button>
+            <button class="btn btn-secondary" onclick="showScreen('schedulePriceScreen')">
+                ⏰ Agendar Preço
+            </button>
+
+            <button class="back-btn" onclick="showScreen('proDashboardScreen')">
+                ← Voltar ao Dashboard
+            </button>
+        </div>
+
+        <!-- Tela Modular: Agendamento de Preço -->
+        <div id="schedulePriceScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Agendar Preço</div>
+            </div>
+
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">
+                Agende uma atualização de preço para ser aplicada automaticamente em um horário específico.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">Tipo de Combustível</label>
+                <select class="form-input">
+                    <option value="">Selecione...</option>
+                    <option value="gasolina-comum">Gasolina Comum</option>
+                    <option value="gasolina-aditivada">Gasolina Aditivada</option>
+                    <option value="etanol">Etanol</option>
+                    <option value="diesel">Diesel S-10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Novo Preço</label>
+                <input type="text" class="form-input" placeholder="R$ 0,00">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data</label>
+                <input type="date" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Horário</label>
+                <input type="time" class="form-input">
+            </div>
+
+            <button class="btn btn-primary" onclick="alert('Preço agendado com sucesso!'); history.back();">
+                ⏰ Agendar
+            </button>
+
+            <button class="back-btn" onclick="history.back()">
+                ← Voltar
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Modal de Reação -->
+    <div id="reactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Reagir à mudança do concorrente</h3>
+                <button class="modal-close" onclick="closeModal('reactionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 15px;">
+                    <strong>Posto Shell - Morumbi</strong> alterou a <strong>Gasolina Comum</strong> para <strong>R$ 5,59</strong>.
+                </p>
+                <p style="color: #666;">
+                    Seu preço atual é <strong style="color: #667eea;">R$ 5,65</strong>.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-modal btn-success" onclick="reactToCompetitor('cover')">
+                    Cobrir (R$ 5,59)
+                </button>
+                <button class="btn btn-modal btn-primary" onclick="reactToCompetitor('beat')">
+                    Bater (R$ 5,58)
+                </button>
+                <button class="btn btn-modal btn-secondary" onclick="closeModal('reactionModal')">
+                    Ignorar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
