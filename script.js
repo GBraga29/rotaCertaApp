@@ -98,6 +98,9 @@ const postosData = [
 // Variável global para armazenar o perfil selecionado
 let selectedProfile = 'consumer';
 
+// Perfil do consumidor (familia ou caminhoneiro)
+let consumerProfile = 'familia';
+
 // Filtros ativos
 let filtroSegmento = 'todos';
 let filtroPerfil = 'carro';
@@ -142,8 +145,8 @@ function handleLogin() {
         // Se for dono de posto, vai para escolha de plano
         showScreen('planChoiceScreen');
     } else {
-        // Se for consumidor, vai para dashboard de consumidor
-        showScreen('userDashboardScreen');
+        // Se for consumidor, vai para tela de seleção de perfil
+        showScreen('consumerProfileScreen');
     }
 }
 
@@ -154,9 +157,27 @@ function handleCreateAccount() {
         // Se for dono de posto, vai para escolha de plano
         showScreen('planChoiceScreen');
     } else {
-        // Se for consumidor, vai para dashboard de consumidor
-        showScreen('userDashboardScreen');
+        // Se for consumidor, vai para tela de seleção de perfil
+        showScreen('consumerProfileScreen');
     }
+}
+
+// Função para selecionar perfil do consumidor
+function selectConsumerProfile(profile) {
+    consumerProfile = profile;
+    
+    // Define o filtro de perfil baseado na escolha
+    if (profile === 'familia') {
+        filtroPerfil = 'carro';
+    } else {
+        filtroPerfil = 'caminhao';
+    }
+    
+    // Vai para o dashboard do consumidor
+    showScreen('userDashboardScreen');
+    
+    // Renderiza os postos com o perfil correto
+    renderizarPostos();
 }
 
 // Função para navegar entre telas do usuário e atualizar botões ativos

@@ -119,6 +119,22 @@
             </button>
         </div>
 
+        <!-- Tela de Seleção de Perfil do Consumidor -->
+        <div id="consumerProfileScreen" class="screen">
+            <div class="welcome-content">
+                <div class="welcome-icon">🚗</div>
+                <h1 class="welcome-title">Como você viaja?</h1>
+                <p class="welcome-text">Personalize sua experiência selecionando seu perfil de viajante</p>
+                
+                <button class="btn btn-primary" onclick="selectConsumerProfile('familia')">
+                    🚗 Motorista de Família
+                </button>
+                <button class="btn btn-secondary" onclick="selectConsumerProfile('caminhoneiro')">
+                    🚚 Caminhoneiro
+                </button>
+            </div>
+        </div>
+
         <!-- Tela de Escolha de Plano -->
         <div id="planChoiceScreen" class="screen">
             <div class="header">
@@ -174,6 +190,32 @@
                     <li class="feature-item">
                         <div class="feature-icon">✓</div>
                         <span>Notificações essenciais</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="plan-card" onclick="showScreen('rodoviaDashboardScreen')">
+                <span class="plan-badge rodovia">PLANO RODOVIA PRO</span>
+                <div class="plan-title">Infraestrutura e Cross-sell</div>
+                <div class="plan-description">
+                    Perfeito para postos de rodovia que oferecem múltiplos serviços e querem maximizar o cross-sell entre bomba e infraestrutura.
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Gestão de infraestrutura</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Vouchers de cross-sell</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Métricas de ocupação</span>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Segmentação por perfil</span>
                     </li>
                 </ul>
             </div>
@@ -293,6 +335,184 @@
 
             <button class="back-btn" onclick="showScreen('welcomeScreen')" style="margin-top: 20px;">
                 ← Sair
+            </button>
+        </div>
+
+        <!-- Dashboard Plano Rodovia Pro -->
+        <div id="rodoviaDashboardScreen" class="screen">
+            <div class="dashboard-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="dashboard-title">Plano Rodovia Pro</div>
+                <div class="dashboard-subtitle">Infraestrutura e Cross-sell</div>
+            </div>
+
+            <h2 style="font-size: 18px; color: #333; margin-bottom: 15px;">
+                📊 Métricas do Dia
+            </h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">150</div>
+                    <div class="stat-label">Check-ins (Bomba Hoje)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">Vouchers (Restaurante) Resgatados</div>
+                </div>
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <div class="stat-value">80%</div>
+                    <div class="stat-label">Ocupação Pátio (Noite)</div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 18px; color: #333; margin-bottom: 15px; margin-top: 25px;">
+                ⚡ Ações Rápidas
+            </h2>
+
+            <button class="btn btn-primary" onclick="showScreen('priceEditScreen')">
+                💰 Editar Preços
+            </button>
+            <button class="btn btn-secondary" onclick="showScreen('createVoucherScreen')">
+                🎁 Criar Voucher (Cross-sell)
+            </button>
+            <button class="btn btn-secondary" onclick="showScreen('editInfrastructureScreen')">
+                🏗️ Editar Infraestrutura
+            </button>
+
+            <button class="btn btn-warning" onclick="showScreen('planChoiceScreen')" style="margin-top: 20px;">
+                Trocar de Plano
+            </button>
+
+            <button class="back-btn" onclick="showScreen('welcomeScreen')" style="margin-top: 20px;">
+                ← Sair
+            </button>
+        </div>
+
+        <!-- Tela: Criar Voucher (Cross-sell) -->
+        <div id="createVoucherScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Criar Voucher de Cross-sell</div>
+            </div>
+
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">
+                Crie promoções que conectem o abastecimento aos seus outros serviços (restaurante, loja, etc).
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">Título da Promoção</label>
+                <input type="text" class="form-input" placeholder="Ex: Café Grátis no Restaurante">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Condição</label>
+                <input type="text" class="form-input" placeholder="Ex: Abastecendo acima de R$ 100,00">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Serviço Beneficiado</label>
+                <select class="form-input">
+                    <option value="">Selecione...</option>
+                    <option value="restaurante">Restaurante</option>
+                    <option value="loja">Loja de Conveniência</option>
+                    <option value="borracharia">Borracharia</option>
+                    <option value="chuveiro">Chuveiro</option>
+                    <option value="outros">Outros Serviços</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Válido até</label>
+                <input type="date" class="form-input">
+            </div>
+
+            <button class="btn btn-success" onclick="alert('Voucher criado com sucesso!'); showScreen('rodoviaDashboardScreen');">
+                🎁 Gerar Promoção
+            </button>
+
+            <button class="back-btn" onclick="showScreen('rodoviaDashboardScreen')">
+                ← Voltar ao Dashboard
+            </button>
+        </div>
+
+        <!-- Tela: Editar Infraestrutura -->
+        <div id="editInfrastructureScreen" class="screen">
+            <div class="header">
+                <div class="logo">Rota Certa</div>
+                <div class="subtitle">Editar Infraestrutura</div>
+            </div>
+
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">
+                Informe quais serviços seu posto oferece. Isso ajuda a personalizar a experiência dos consumidores.
+            </p>
+
+            <h3 style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">
+                🚚 Para Caminhoneiros
+            </h3>
+
+            <div class="checkbox-group">
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Pátio Vigiado</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Balança</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Borracharia</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox">
+                    <span>Chuveiro Pago</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Oficina Mecânica</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox">
+                    <span>Hotel/Pernoite</span>
+                </label>
+            </div>
+
+            <h3 style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px; margin-top: 30px;">
+                👨‍👩‍👧 Para Famílias
+            </h3>
+
+            <div class="checkbox-group">
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Restaurante</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Fraldário</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox">
+                    <span>Playground</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Banheiro 5 Estrelas</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" checked>
+                    <span>Loja de Conveniência</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox">
+                    <span>Wi-Fi Gratuito</span>
+                </label>
+            </div>
+
+            <button class="btn btn-success" onclick="alert('Infraestrutura atualizada com sucesso!'); showScreen('rodoviaDashboardScreen');" style="margin-top: 30px;">
+                ✓ Salvar Alterações
+            </button>
+
+            <button class="back-btn" onclick="showScreen('rodoviaDashboardScreen')">
+                ← Voltar ao Dashboard
             </button>
         </div>
 

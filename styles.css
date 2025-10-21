@@ -245,6 +245,10 @@ body {
     background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 }
 
+.plan-badge.rodovia {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
 /* Dashboard */
 .dashboard-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -1028,6 +1032,43 @@ select.form-input {
     padding: 6px 12px;
     border-radius: 16px;
     font-size: 12px;
+    font-weight: 500;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f8f9ff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.checkbox-item:hover {
+    background: #f0f2ff;
+    border-color: #667eea;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.checkbox-item span {
+    font-size: 15px;
+    color: #333;
     font-weight: 500;
 }
 
